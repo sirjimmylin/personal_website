@@ -1,9 +1,10 @@
 module Admin
   class PostsController < AdminController
+    # This line says: "Run set_post before edit, update, and destroy"
     before_action :set_post, only: [:edit, :update, :destroy]
 
     def index
-      @posts = Post.order(created_at: :desc)
+      @posts = Post.order(published_at: :desc)
     end
 
     def new
@@ -19,6 +20,9 @@ module Admin
       end
     end
 
+    def edit
+    end
+
     def update
       if @post.update(post_params)
         redirect_to admin_posts_path, notice: "Post updated!"
@@ -27,7 +31,14 @@ module Admin
       end
     end
 
-    private
+    # --- MAKE SURE THIS METHOD EXISTS AND IS ABOVE 'PRIVATE' ---
+    def destroy
+      @post.destroy
+      redirect_to admin_posts_path, notice: "Post deleted."
+    end
+    # -----------------------------------------------------------
+
+    private  # <--- Everything below this line is hidden
 
     def set_post
       @post = Post.find_by!(slug: params[:slug])
