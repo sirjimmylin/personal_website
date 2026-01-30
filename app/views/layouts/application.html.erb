@@ -28,9 +28,46 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+  <body class="bg-gray-50">
+  <nav class="bg-white shadow">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 justify-between">
+        <div class="flex">
+          <div class="flex flex-shrink-0 items-center">
+            <%= link_to "MySite", root_path, class: "font-bold text-xl text-indigo-600" %>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <%= link_to "Home", root_path, class: "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" %>
+            <%= link_to "Blog", posts_path, class: "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" %>
+            <%= link_to "Projects", projects_path, class: "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" %>
+            <%= link_to "About", about_path, class: "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" %>
+          </div>
+        </div>
+        
+        <div class="flex items-center">
+          <form action="<%= posts_path %>" method="get" class="mr-4">
+             <input type="text" name="query" placeholder="Search..." class="rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </form>
+
+          <% if Current.user %>
+            <%= link_to "Admin", admin_root_path, class: "text-sm font-medium text-indigo-600 hover:text-indigo-500" %>
+            <%= button_to "Logout", logout_path, method: :delete, class: "ml-4 text-sm font-medium text-gray-500 hover:text-gray-900 bg-transparent border-0 cursor-pointer" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <% flash.each do |key, value| %>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+      <div class="p-4 rounded-md <%= key == 'alert' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700' %>">
+        <%= value %>
+      </div>
+    </div>
+  <% end %>
+
+  <main>
+    <%= yield %>
+  </main>
+</body>
 </html>

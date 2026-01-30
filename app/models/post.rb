@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   multisearchable against: [:title, :summary, :body]
 
   # Friendly URLs (e.g., /posts/my-data-science-project)
-  to_param
+  def to_param
     slug
   end
 end
