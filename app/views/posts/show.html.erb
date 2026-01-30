@@ -1,4 +1,4 @@
-<div class="bg-white px-6 py-32 lg:px-8">
+<div data-controller="toc" class="bg-white px-6 py-32 lg:px-8">
   <div class="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-4 gap-8">
     
     <div class="lg:col-span-1 lg:sticky lg:top-24 self-start space-y-8">
@@ -7,28 +7,25 @@
         <%= link_to "← Back to Blog", posts_path, class: "text-sm font-semibold text-gray-500 hover:text-indigo-600" %>
       </div>
 
-      <div data-controller="toc" class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+      <div data-toc-target="container" class="p-4 bg-gray-50 rounded-lg border border-gray-100">
         <h4 class="font-bold text-gray-900 mb-4">Table of Contents</h4>
-        <nav data-toc-target="links">
-          </nav>
         
-        <div data-toc-target="content" class="hidden">
-           </div>
+        <nav data-toc-target="links" class="space-y-2 text-sm">
+          </nav>
       </div>
 
       <div class="text-sm text-gray-500">
-        <p>Published: <%= @post.published_at.strftime("%B %d, %Y") %></p>
-        <p class="mt-2">Topic: Data Science</p>
+        <p>Published: <%= @post.published_at&.strftime("%B %d, %Y") || "Draft" %></p>
+        <p class="mt-2">Topic: <%= @post.tag_list rescue "General" %></p>
       </div>
     </div>
 
     <article class="lg:col-span-3 prose prose-lg prose-indigo mx-auto lg:mx-0">
       <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-8"><%= @post.title %></h1>
       
-      <div data-controller="toc" data-toc-target="content">
+      <div data-toc-target="content">
         <%= markdown(@post.body) %>
       </div>
-
     </article>
   </div>
 </div>

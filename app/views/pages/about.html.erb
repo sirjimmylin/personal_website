@@ -1,4 +1,54 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#about</h1>
-  <p>Find me in app/views/pages/about.html.erb</p>
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      
+      <div>
+        <div class="aspect-[4/3] w-full rounded-2xl bg-gray-100 object-cover mb-8 overflow-hidden">
+           <img src="https://placehold.co/800x600?text=Profile+Photo" alt="My Profile" class="w-full h-full object-cover">
+        </div>
+        
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Me</h2>
+        <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+          <p>
+            Hello! I am a Data Scientist and Developer based in [Your City]. 
+            I have a passion for building software that solves real-world problems.
+          </p>
+          <p>
+            My background is in [Your Major], and I specialize in Ruby on Rails, Python, and Machine Learning.
+            When I'm not coding, you can find me [Your Hobbies].
+          </p>
+        </div>
+        
+        <div class="mt-8 flex gap-4">
+           <%= link_to "GitHub", "https://github.com", class: "text-gray-500 hover:text-gray-900" %>
+           <%= link_to "LinkedIn", "https://linkedin.com", class: "text-gray-500 hover:text-gray-900" %>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-2xl p-8 lg:p-12">
+        <h3 class="text-2xl font-bold tracking-tight text-gray-900">Get in Touch</h3>
+        <p class="mt-2 text-gray-600">Have a question or want to work together? Send me a message!</p>
+
+        <%= form_with url: contacts_path, class: "mt-8 space-y-6" do |form| %>
+          <div>
+            <%= form.label :name, class: "block text-sm font-semibold leading-6 text-gray-900" %>
+            <%= form.text_field :name, class: "mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+
+          <div>
+            <%= form.label :email, class: "block text-sm font-semibold leading-6 text-gray-900" %>
+            <%= form.email_field :email, class: "mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+
+          <div>
+            <%= form.label :message, class: "block text-sm font-semibold leading-6 text-gray-900" %>
+            <%= form.text_area :message, rows: 4, class: "mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+
+          <%= form.submit "Send Message", class: "block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+        <% end %>
+      </div>
+      
+    </div>
+  </div>
 </div>

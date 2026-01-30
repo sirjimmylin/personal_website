@@ -16,9 +16,11 @@ Rails.application.routes.draw do
 
   # Admin Namespace (Restricted to you)
   namespace :admin do
-    root "dashboard#index"
-    resources :posts, param: :slug
-    resources :projects, param: :slug
+  root "dashboard#index"
+  # Add except: [:show] here
+  resources :posts, param: :slug, except: [:show]
+  resources :projects, param: :slug, except: [:show]
+  resources :contacts, only: [:create]
   end
 
   # Login Routes
