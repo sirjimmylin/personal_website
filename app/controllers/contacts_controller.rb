@@ -1,8 +1,8 @@
 class ContactsController < ApplicationController
   def create
-    # For now, we just log the message to the server console
-    puts ">>> NEW MESSAGE from #{params[:name]} (#{params[:email]}): #{params[:message]}"
+    # This prints the message to your terminal (where rails server is running)
+    puts ">>> MESSAGE RECEIVED from #{params[:name]}"
     
-    redirect_to about_path, notice: "Thanks for your message! I'll be in touch soon."
+    redirect_to about_path, notice: "Message sent!"
   end
 end
