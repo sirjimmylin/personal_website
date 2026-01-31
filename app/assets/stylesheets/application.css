@@ -105,3 +105,54 @@
   margin-top: -1.2em; /* Pull it up to sit on the last line */
   font-size: 1.2em;
 }
+
+/* DEMO CONTAINER */
+.demo-card {
+  border: 1px solid #e5e7eb; /* Light gray border */
+  border-radius: 0.5rem;     /* Rounded corners */
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* The Header (Mac browser style dots) */
+.demo-header {
+  background-color: #f3f4f6;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.browser-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+.dot-red { background-color: #ef4444; }
+.dot-yellow { background-color: #f59e0b; }
+.dot-green { background-color: #10b981; }
+
+/* The Live Demo Area */
+.demo-preview {
+  padding: 2rem;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  /* Center the content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The Code Snippet Area */
+.demo-code {
+  background-color: #0d1117; /* GitHub Dark bg */
+  padding: 0;
+  margin: 0;
+}
+.demo-code pre {
+  margin: 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
