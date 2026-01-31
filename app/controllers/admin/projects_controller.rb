@@ -2,10 +2,16 @@ module Admin
   class ProjectsController < AdminController
     before_action :set_project, only: [:edit, :update, :destroy]
 
-    def index
-      @projects = Project.order(published_at: :desc)
-    end
+   def index
+      @projects = Project.all.order(created_at: :desc)
 
+      if params[:status] == 'published'
+        @projects = @projects.where("published_at <= ?", Time.current)
+      elsif params[:status] == 'draft'
+        @projects = @projects.where("published_at IS NULL OR published_at > ?", Time.current)
+      end
+    end
+    
     def new
       @project = Project.new
     end

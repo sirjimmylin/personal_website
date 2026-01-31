@@ -6,6 +6,6 @@ class Post < ApplicationRecord
 
   # Friendly URLs (e.g., /posts/my-data-science-project)
   def to_param
-    slug
+  slug.presence || id.to_s
   end
 end

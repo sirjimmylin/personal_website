@@ -10,16 +10,26 @@
     </div>
   </div>
 
-  <% if params[:tag].present? %>
+  <% if params[:tag].present? || params[:status].present? %>
     <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="text-sm text-blue-700">Filtering by topic:</span>
-        <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
-          <%= params[:tag] %>
-        </span>
+        <span class="text-sm text-blue-700">Filtering by:</span>
+        
+        <% if params[:tag].present? %>
+          <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
+            Topic: <%= params[:tag] %>
+          </span>
+        <% end %>
+
+        <% if params[:status].present? %>
+          <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
+            Status: <%= params[:status].capitalize %>
+          </span>
+        <% end %>
       </div>
+      
       <%= link_to admin_posts_path, class: "text-sm font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1" do %>
-        <span>Clear Filter</span>
+        <span>Clear Filters</span>
         <span aria-hidden="true">&times;</span>
       <% end %>
     </div>
@@ -49,11 +59,10 @@
 
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     <% if post.published_at && post.published_at <= Time.current %>
-                      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Published</span>
+                      <%= link_to "Published", admin_posts_path(status: 'published'), class: "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 hover:bg-green-100 cursor-pointer" %>
                     <% else %>
-                      <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Draft</span>
+                      <%= link_to "Draft", admin_posts_path(status: 'draft'), class: "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 hover:bg-yellow-100 cursor-pointer" %>
                     <% end %>
-
                     <% if post.try(:tag).present? %>
                       <%= link_to post.tag, admin_posts_path(tag: post.tag), class: "ml-2 inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 hover:bg-blue-100 hover:text-blue-800 transition cursor-pointer" %>
                     <% end %>

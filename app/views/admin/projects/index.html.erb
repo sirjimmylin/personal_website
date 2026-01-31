@@ -12,6 +12,20 @@
   <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <% if params[:status].present? %>
+          <div class="mb-6 bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-blue-700">Filtering by:</span>
+              <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
+                Status: <%= params[:status].capitalize %>
+              </span>
+            </div>
+            <%= link_to admin_projects_path, class: "text-sm font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1" do %>
+              <span>Clear Filter</span>
+              <span aria-hidden="true">&times;</span>
+            <% end %>
+          </div>
+        <% end %>
         <table class="min-w-full divide-y divide-gray-300">
           <thead>
             <tr>
@@ -30,11 +44,11 @@
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= project.title %></td>
                 
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <% if project.published_at && project.published_at <= Time.current %>
-                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Live</span>
-                  <% else %>
-                    <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Draft</span>
-                  <% end %>
+                                  <% if project.published_at && project.published_at <= Time.current %>
+                  <%= link_to "Live", admin_projects_path(status: 'published'), class: "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 hover:bg-green-100 cursor-pointer" %>
+                <% else %>
+                  <%= link_to "Draft", admin_projects_path(status: 'draft'), class: "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 hover:bg-yellow-100 cursor-pointer" %>
+                <% end %>
                 </td>
 
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -46,14 +60,16 @@
                   <% end %>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= project.published_at&.strftime("%b %d, %Y") %></td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                <%= link_to "Edit", edit_admin_project_path(project), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
-                
-                <%= link_to "Delete", admin_project_path(project), 
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
-                    class: "text-red-600 hover:text-red-900" 
-                %>
-              </td>
+             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+              <%= link_to "View Live", project_path(project), target: "_blank", class: "text-green-600 hover:text-green-900 mr-4" %>
+
+              <%= link_to "Edit", edit_admin_project_path(project), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
+              
+              <%= link_to "Delete", admin_project_path(project), 
+                  data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+                  class: "text-red-600 hover:text-red-900" 
+              %>
+            </td>
               </tr>
             <% end %>
           </tbody>

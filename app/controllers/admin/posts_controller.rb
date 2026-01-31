@@ -4,14 +4,21 @@ module Admin
     before_action :set_post, only: [:edit, :update, :destroy]
 
     def index
+      # Start with all posts
+      @posts = Post.all.order(created_at: :desc)
+
+      # Filter by Tag (if clicked)
       if params[:tag].present?
-      # Filter by tag if provided
-        @posts = Post.where(tag: params[:tag]).order(created_at: :desc)
-      else
-       # Otherwise show all
-        @posts = Post.all.order(created_at: :desc)
+        @posts = @posts.where(tag: params[:tag])
       end
-  end
+
+      # Filter by Status (if clicked)
+      if params[:status] == 'published'
+        @posts = @posts.where("published_at <= ?", Time.current)
+      elsif params[:status] == 'draft'
+        @posts = @posts.where("published_at IS NULL OR published_at > ?", Time.current)
+      end
+    end
 
     def new
       @post = Post.new
@@ -66,7 +73,17 @@ module Admin
     private  # <--- Everything below this line is hidden
 
     def set_post
-      @post = Post.find_by!(slug: params[:slug])
+      # 1. Try to find by Slug first (e.g. "my-math-post")
+      @post = Post.find_by(slug: params[:slug])
+      
+      # 2. If not found, try finding by ID (e.g. "4")
+      # (This handles the specific error you are seeing now)
+      @post ||= Post.find_by(id: params[:slug])
+
+      # 3. If still nothing, redirect safely
+      if @post.nil?
+        redirect_to admin_posts_path, alert: "Post not found."
+      end
     end
 
     def post_params
