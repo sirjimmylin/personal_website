@@ -45,11 +45,13 @@ module Admin
     end
   end
 
-    def destroy
-      @project.destroy
-      redirect_to admin_projects_path, notice: "Project deleted."
-    end
-
+ def destroy
+    # CHANGE THIS LINE: Use find_by!(slug: params[:slug])
+    @project = Project.find_by!(slug: params[:slug])
+    
+    @project.destroy
+    redirect_to admin_projects_path, notice: "Project was successfully deleted."
+  end
     private
 
     def set_project

@@ -56,10 +56,11 @@ module Admin
   end
 
     # --- MAKE SURE THIS METHOD EXISTS AND IS ABOVE 'PRIVATE' ---
-    def destroy
-      @post.destroy
-      redirect_to admin_posts_path, notice: "Post deleted."
-    end
+  def destroy
+    @post = Post.find_by!(slug: params[:slug])
+    @post.destroy
+    redirect_to admin_posts_path, notice: "Post was successfully deleted."
+  end
     # -----------------------------------------------------------
 
     private  # <--- Everything below this line is hidden
