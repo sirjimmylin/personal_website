@@ -1,26 +1,25 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="content-toggle"
 export default class extends Controller {
-  static targets = ["section"]
+  static targets = ["content", "button"]
+  static values = { open: Boolean }
 
   connect() {
-    // Show the first section by default
-    this.showSection("general")
+    this.updateState()
   }
 
-  toggle(event) {
-    const category = event.currentTarget.dataset.category
-    this.showSection(category)
+  toggle() {
+    this.openValue = !this.openValue
+    this.updateState()
   }
 
-  showSection(category) {
-    this.sectionTargets.forEach(element => {
-      if (element.dataset.category === category) {
-        element.classList.remove("hidden")
-      } else {
-        element.classList.add("hidden")
-      }
-    })
+  updateState() {
+    if (this.openValue) {
+      this.contentTarget.classList.remove("hidden")
+      this.buttonTarget.innerText = "Hide"
+    } else {
+      this.contentTarget.classList.add("hidden")
+      this.buttonTarget.innerText = "Show" // or whatever default text you want
+    }
   }
 }

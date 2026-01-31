@@ -1,8 +1,17 @@
 class ContactsController < ApplicationController
   def create
-    # This prints the message to your terminal (where rails server is running)
-    puts ">>> MESSAGE RECEIVED from #{params[:name]}"
+    @contact = Contact.new(contact_params)
     
-    redirect_to about_path, notice: "Message sent!"
+    if @contact.save
+      redirect_to about_path, notice: "Thanks! I have received your message."
+    else
+      redirect_to about_path, alert: "Something went wrong. Please try again."
+    end
+  end
+
+  private
+
+  def contact_params
+    params.permit(:name, :email, :message)
   end
 end

@@ -4,9 +4,9 @@ module MarkdownHelper
 
     # 1. Configure the HTML Renderer
     renderer = Redcarpet::Render::HTML.new(
-      filter_html: true,     # Security: filters out user-injected HTML
-      hard_wrap: true,       # Enter key creates a new line
-      link_attributes: { rel: 'nofollow', target: "_blank" } # Open links in new tab
+      filter_html: false,     # <--- CHANGE THIS to false so your <div> tags work!
+      hard_wrap: true, 
+      link_attributes: { rel: 'nofollow', target: "_blank" }
     )
 
     # 2. Configure the Parser (Enable Tables & Code Blocks here!)
