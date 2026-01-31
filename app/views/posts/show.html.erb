@@ -16,7 +16,12 @@
 
       <div class="text-sm text-gray-500">
         <p>Published: <%= @post.published_at&.strftime("%B %d, %Y") || "Draft" %></p>
-        <p class="mt-2">Topic: <%= @post.tag_list rescue "General" %></p>
+          <% if @post.tag.present? %>
+            <p class="mt-2">
+              Topic: 
+              <%= link_to @post.tag, tag_path(@post.tag), class: "text-blue-600 hover:text-blue-800 hover:underline cursor-pointer" %>
+            </p>
+        <% end %>
       </div>
     </div>
 

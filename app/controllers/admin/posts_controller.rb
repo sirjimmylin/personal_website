@@ -4,8 +4,14 @@ module Admin
     before_action :set_post, only: [:edit, :update, :destroy]
 
     def index
-      @posts = Post.order(published_at: :desc)
-    end
+      if params[:tag].present?
+      # Filter by tag if provided
+        @posts = Post.where(tag: params[:tag]).order(created_at: :desc)
+      else
+       # Otherwise show all
+        @posts = Post.all.order(created_at: :desc)
+      end
+  end
 
     def new
       @post = Post.new
@@ -45,7 +51,7 @@ module Admin
     end
 
     def post_params
-      params.require(:post).permit(:title, :slug, :summary, :body, :published_at, :tag_list)
+      params.require(:post).permit(:title, :slug, :summary, :body, :published_at, :tag_list, :tag)
     end
   end
 end

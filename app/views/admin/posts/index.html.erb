@@ -1,7 +1,8 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <h1 class="text-2xl font-semibold text-gray-900">Blog Posts</h1>
+      <h1 class="text-2xl font-semibold text-gray-900">Manage Blog Posts</h1>
       <p class="mt-2 text-sm text-gray-700">A list of all your blog posts including drafts.</p>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -9,42 +10,68 @@
     </div>
   </div>
 
+  <% if params[:tag].present? %>
+    <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-blue-700">Filtering by topic:</span>
+        <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
+          <%= params[:tag] %>
+        </span>
+      </div>
+      <%= link_to admin_posts_path, class: "text-sm font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1" do %>
+        <span>Clear Filter</span>
+        <span aria-hidden="true">&times;</span>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Title</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Published</th>
-              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                <span class="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <% @posts.each do |post| %>
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
               <tr>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= post.title %></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <% if post.published_at && post.published_at <= Time.current %>
-                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Published</span>
-                  <% else %>
-                    <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Draft</span>
-                  <% end %>
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= post.published_at&.strftime("%b %d, %Y") %></td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                </td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Title</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Published</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span class="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% @posts.each do |post| %>
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <%= post.title %>
+                  </td>
+
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <% if post.published_at && post.published_at <= Time.current %>
+                      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Published</span>
+                    <% else %>
+                      <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Draft</span>
+                    <% end %>
+
+                    <% if post.try(:tag).present? %>
+                      <%= link_to post.tag, admin_posts_path(tag: post.tag), class: "ml-2 inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 hover:bg-blue-100 hover:text-blue-800 transition cursor-pointer" %>
+                    <% end %>
+                  </td>
+
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <%= post.published_at&.strftime("%b %d, %Y") || "-" %>
+                  </td>
+
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <%= link_to "View Live", post_path(post), target: "_blank", class: "text-green-600 hover:text-green-900 mr-4" %>
                     <%= link_to "Edit", edit_admin_post_path(post), class: "text-indigo-600 hover:text-indigo-900" %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -1,17 +1,43 @@
 <div class="bg-white py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">The Blog</h2>
       <p class="mt-2 text-lg leading-8 text-gray-600">Thoughts on math, code, and linguistics.</p>
     </div>
 
+    <% if params[:tag].present? %>
+      <div class="mx-auto mt-10 max-w-2xl text-center">
+        <div class="inline-flex items-center gap-x-3 rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+          <span>Filtering by: <strong><%= params[:tag] %></strong></span>
+          
+          <%= link_to posts_path, class: "group -mr-1 flex h-5 w-5 items-center justify-center rounded-full hover:bg-blue-200 transition" do %>
+            <svg class="h-3.5 w-3.5 text-blue-600 group-hover:text-blue-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+            </svg>
+          <% end %>
+        </div>
+        
+        <div class="mt-2">
+          <%= link_to "← View All Posts", posts_path, class: "text-sm font-semibold text-gray-500 hover:text-gray-900 transition" %>
+        </div>
+      </div>
+    <% end %>
+
     <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
       <% @posts.each do |post| %>
         <article class="flex flex-col items-start justify-between p-6 rounded-2xl bg-gray-50 hover:bg-gray-100 transition">
+          
           <div class="flex items-center gap-x-4 text-xs">
-            <time datetime="<%= post.published_at %>" class="text-gray-500"><%= post.published_at.strftime("%b %d, %Y") %></time>
-            <span class="relative z-10 rounded-full bg-indigo-50 px-3 py-1.5 font-medium text-indigo-600 hover:bg-indigo-100">Math</span>
+            <time datetime="<%= post.published_at %>" class="text-gray-500">
+              <%= post.published_at&.strftime("%b %d, %Y") || "Draft" %>
+            </time>
+            
+            <% if post.try(:tag).present? %>
+              <%= link_to post.tag, tag_path(post.tag), class: "relative z-10 rounded-full bg-indigo-50 px-3 py-1.5 font-medium text-indigo-600 hover:bg-indigo-100 transition cursor-pointer" %>
+            <% end %>
           </div>
+
           <div class="group relative">
             <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
               <a href="<%= post_path(post) %>">
@@ -19,13 +45,15 @@
                 <%= post.title %>
               </a>
             </h3>
-            <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600"><%= post.summary %></p>
+            <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600"><%= post.summary rescue "" %></p>
           </div>
+
           <div class="mt-8 flex items-center gap-x-4">
-             <%= link_to "Read Article →", post, class: "text-sm font-semibold text-indigo-600" %>
+             <%= link_to "Read Article →", post, class: "text-sm font-semibold text-indigo-600 relative z-10" %>
           </div>
         </article>
       <% end %>
     </div>
+
   </div>
 </div>
