@@ -15,8 +15,8 @@ class PostsController < ApplicationController
       @posts = Post.where(tag: params[:tag])
       
     else
-      # Default: Show all (Ordered by newest first)
-      @posts = Post.all.order(created_at: :desc)
+      # Only show posts where published_at is in the PAST or PRESENT
+      @posts = Post.where("published_at <= ?", Time.current).order(created_at: :desc)
     end
   end
 
