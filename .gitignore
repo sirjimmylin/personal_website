@@ -33,6 +33,11 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Ignore deployment configuration files.
+/config/deploy.yml
+
+# Ignore secret credentials files.
+/.kamal/secrets
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
