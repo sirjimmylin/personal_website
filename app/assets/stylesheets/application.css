@@ -72,3 +72,36 @@
 .prose tr:nth-child(even) {
   background-color: #fcfcfc;
 }
+
+/* LaTeX-style Environments */
+
+/* THEOREM: Italic body, bold header */
+.math-theorem {
+  margin-bottom: 1.5rem;
+  font-style: italic; /* The standard LaTeX look */
+}
+
+.math-theorem strong {
+  font-style: normal; /* "Theorem" label stands up straight */
+  font-weight: 800;   /* Extra bold */
+  margin-right: 0.5rem;
+}
+
+/* PROOF: Normal body, Italic header, QED box */
+.math-proof {
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.math-proof strong {
+  font-style: italic; /* "Proof" label is usually italic in LaTeX */
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* The Q.E.D. Box (Halmos Symbol) */
+.qed-box {
+  float: right;
+  margin-top: -1.2em; /* Pull it up to sit on the last line */
+  font-size: 1.2em;
+}
