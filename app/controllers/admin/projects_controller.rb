@@ -11,24 +11,39 @@ module Admin
     end
 
     def create
-      @project = Project.new(project_params)
-      if @project.save
-        redirect_to admin_projects_path, notice: "Project created!"
-      else
-        render :new, status: :unprocessable_entity
-      end
+    @project = Project.new(project_params)
+
+    if params[:commit_action] == "publish"
+      @project.published_at = Time.current
+    else
+      @project.published_at = nil
     end
+
+    if @project.save
+      redirect_to admin_projects_path, notice: "Project was successfully saved."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
 
     def edit
     end
 
     def update
-      if @project.update(project_params)
-        redirect_to admin_projects_path, notice: "Project updated!"
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    @project.assign_attributes(project_params)
+
+    if params[:commit_action] == "publish"
+      @project.published_at = Time.current
+    elsif params[:commit_action] == "draft"
+      @project.published_at = nil
     end
+
+    if @project.save
+      redirect_to admin_projects_path, notice: "Project was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
     def destroy
       @project.destroy
