@@ -2,25 +2,26 @@ module MarkdownHelper
   def markdown(text)
     return "" unless text.present?
 
-    # Options for Redcarpet
-    options = {
-      filter_html:     false, # Allow HTML (needed for your interactive buttons)
-      hard_wrap:       true,
-      link_attributes: { rel: 'nofollow', target: "_blank" },
-      space_after_headers: true,
-      fenced_code_blocks: true
-    }
+    # 1. Configure the HTML Renderer
+    renderer = Redcarpet::Render::HTML.new(
+      filter_html: true,     # Security: filters out user-injected HTML
+      hard_wrap: true,       # Enter key creates a new line
+      link_attributes: { rel: 'nofollow', target: "_blank" } # Open links in new tab
+    )
 
+    # 2. Configure the Parser (Enable Tables & Code Blocks here!)
     extensions = {
-      autolink:           true,
-      superscript:        true,
-      disable_indented_code_blocks: true
+      autolink: true,
+      tables: true,           # <--- ENABLES TABLES
+      fenced_code_blocks: true, # <--- ENABLES CODE BLOCKS (```ruby ...)
+      strikethrough: true,
+      superscript: true,
+      highlight: true
     }
 
-    renderer = Redcarpet::Render::HTML.new(options)
     markdown = Redcarpet::Markdown.new(renderer, extensions)
-
-    # Sanitize helps prevent XSS attacks while allowing specific tags
-    sanitize(markdown.render(text), tags: %w(h1 h2 h3 div p span a ul ol li b i strong em pre code table tr th td img br iframe))
+    
+    # 3. Render
+    markdown.render(text).html_safe
   end
 end

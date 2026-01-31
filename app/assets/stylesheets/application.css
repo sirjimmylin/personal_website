@@ -8,3 +8,67 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+/* FORCE MARKDOWN HEADERS */
+.prose h1 {
+  font-size: 2.25rem; /* Big (36px) */
+  line-height: 2.5rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  color: #111827;
+}
+
+.prose h2 {
+  font-size: 1.5rem; /* Medium-Big (24px) */
+  line-height: 2rem;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb; /* Adds a nice underline to H2s */
+  padding-bottom: 0.3em;
+}
+
+.prose p {
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.625em;
+  margin-bottom: 1.25em;
+}
+
+/* FORCE TABLE STYLES */
+.prose table {
+  width: 100%;
+  border-collapse: collapse; /* Merges borders nicely */
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: 0.875rem; /* Text-sm */
+}
+
+.prose thead {
+  background-color: #f9fafb; /* Light gray background for headers */
+}
+
+.prose th {
+  font-weight: 600;
+  color: #111827;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb; /* Gray border */
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  color: #374151;
+  border: 1px solid #e5e7eb; /* Gray border */
+}
+
+/* Optional: Zebra striping for readability */
+.prose tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
