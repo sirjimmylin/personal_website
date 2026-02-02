@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root "pages#home"
   get "tags/:tag", to: "posts#index", as: :tag
   get "search", to: "search#index"
+  get "links", to: "links#index"
   resources :posts, only: [:index, :show]
   resources :projects, only: [:index, :show]
 

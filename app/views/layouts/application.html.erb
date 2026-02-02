@@ -65,6 +65,7 @@
       <%= link_to "About", "/about", class: "hover:text-blue-600 font-medium transition" %>
       <%= link_to "Projects", "/projects", class: "hover:text-blue-600 font-medium transition" %>
       <%= link_to "Posts", "/posts", class: "hover:text-blue-600 font-medium transition" %>
+      <%= link_to "Links", links_path, class: "hover:text-blue-600 font-medium transition" %>
 
       <%= form_with url: search_path, method: :get, class: "relative" do |form| %>
         <%= form.text_field :query, placeholder: "Search...", class: "border border-gray-300 rounded-full py-1 px-3 text-sm focus:outline-none focus:border-blue-500 w-48" %>
@@ -97,6 +98,7 @@
       <%= link_to "About", "/about", class: "block hover:bg-gray-50 px-3 py-2 rounded" %>
       <%= link_to "Projects", "/projects", class: "block hover:bg-gray-50 px-3 py-2 rounded" %>
       <%= link_to "Posts", "/posts", class: "block hover:bg-gray-50 px-3 py-2 rounded" %>
+      <%= link_to "Links", links_path, class: "block hover:bg-gray-50 px-3 py-2 rounded" %>
       
       <div class="flex items-center space-x-4 px-3 py-2">
         <span class="text-gray-500 text-sm font-medium">Connect:</span>
