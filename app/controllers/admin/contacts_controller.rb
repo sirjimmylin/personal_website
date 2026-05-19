@@ -1,5 +1,5 @@
 module Admin
-  class ContactsController < ApplicationController
+  class ContactsController < AdminController
     def index
       @contacts = Contact.order(created_at: :desc)
     end

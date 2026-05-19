@@ -20,8 +20,9 @@ class ProjectsController < ApplicationController
     # SECURITY CHECK:
     # If a user guesses the URL of a draft project, kick them out.
     # (Unless you want them to see a 404, which is also fine)
-    if @project.published_at.nil? || @project.published_at > Time.current
+    unless authenticated? || @project.published?
       redirect_to projects_path, alert: "That project is not live yet."
+      return
     end
   end
 end

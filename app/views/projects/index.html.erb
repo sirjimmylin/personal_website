@@ -14,10 +14,10 @@
             
             <div class="ml-auto flex gap-2">
               <% if project.repo_link.present? %>
-                <%= link_to "Code", project.repo_link, target: "_blank", class: "relative z-10 rounded-full bg-gray-200 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-300" %>
+                <%= link_to "Code", project.repo_link, target: "_blank", rel: "noopener noreferrer", class: "relative z-10 rounded-full bg-gray-200 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-300" %>
               <% end %>
               <% if project.demo_link.present? %>
-                <%= link_to "Live Demo", project.demo_link, target: "_blank", class: "relative z-10 rounded-full bg-indigo-100 px-3 py-1.5 font-medium text-indigo-600 hover:bg-indigo-200" %>
+                <%= link_to "Live Demo", project.demo_link, target: "_blank", rel: "noopener noreferrer", class: "relative z-10 rounded-full bg-indigo-100 px-3 py-1.5 font-medium text-indigo-600 hover:bg-indigo-200" %>
               <% end %>
             </div>
           </div>

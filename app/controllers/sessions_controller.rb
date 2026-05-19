@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     if user = User.authenticate_by(email_address: params[:email_address], password: params[:password])
+      reset_session
       session[:user_id] = user.id
       redirect_to admin_root_path, notice: "Welcome back!"
     else
@@ -12,7 +13,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    reset_session
     redirect_to root_path, notice: "Logged out."
   end
 end

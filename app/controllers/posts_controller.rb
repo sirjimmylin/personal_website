@@ -2,21 +2,25 @@ class PostsController < ApplicationController
   # 1. CRITICAL: This line finds the post before 'show', 'edit', 'update', or 'destroy' runs.
   # If this is missing, @post will be nil, causing your error.
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :ensure_post_is_published, only: :show
 
   # GET /posts
   def index
+    scope = authenticated? ? Post.all : Post.published
+
     if params[:query].present?
       # Search logic
       @results = PgSearch.multisearch(params[:query])
       @posts = @results.map(&:searchable).select { |r| r.is_a?(Post) }
+      @posts = @posts.select(&:published?) unless authenticated?
       
     elsif params[:tag].present?
       # --- NEW: Filter by Tag ---
-      @posts = Post.where(tag: params[:tag])
+      @posts = scope.where(tag: params[:tag])
       
     else
       # Only show posts where published_at is in the PAST or PRESENT
-      @posts = Post.where("published_at <= ?", Time.current).order(created_at: :desc)
+      @posts = scope.order(created_at: :desc)
     end
   end
 
@@ -63,22 +67,19 @@ class PostsController < ApplicationController
   private
 
 # Find the post by ID *or* by Title
-    def set_post
-      # 1. First, try to find by the standard ID number (e.g., /posts/1)
-      @post = Post.find_by(id: params[:id])
+  def set_post
+    @post = Post.find_by(slug: params[:id]) || Post.find_by(id: params[:id])
 
-      # 2. If we didn't find it by ID, assume the URL is a Title (e.g., /posts/my-first-test)
-      if @post.nil?
-        # Convert "my-first-test" back to "my first test" to search the database
-        possible_title = params[:id].gsub("-", " ")
-        
-        # Search for the title (ignoring upper/lower case)
-        @post = Post.where("LOWER(title) = ?", possible_title.downcase).first
-      end
-
-      # 3. If we STILL can't find it, safe redirect
-      if @post.nil?
-        redirect_to posts_path, alert: "Could not find that post."
-      end
+    if @post.nil?
+      redirect_to posts_path, alert: "Could not find that post."
+      return
     end
+  end
+
+  def ensure_post_is_published
+    return if authenticated?
+    return if @post.published?
+
+    redirect_to posts_path, alert: "That post is not live yet."
+  end
   end

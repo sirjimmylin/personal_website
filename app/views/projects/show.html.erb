@@ -10,10 +10,10 @@
         <div class="p-4 bg-indigo-50 rounded-lg border border-indigo-100 space-y-3">
           <h4 class="font-bold text-indigo-900 text-sm uppercase tracking-wide">Project Links</h4>
           <% if @project.repo_link.present? %>
-            <%= link_to "View Source Code", @project.repo_link, target: "_blank", class: "block w-full text-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+            <%= link_to "View Source Code", @project.repo_link, target: "_blank", rel: "noopener noreferrer", class: "block w-full text-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
           <% end %>
           <% if @project.demo_link.present? %>
-            <%= link_to "Launch Live Demo", @project.demo_link, target: "_blank", class: "block w-full text-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+            <%= link_to "Launch Live Demo", @project.demo_link, target: "_blank", rel: "noopener noreferrer", class: "block w-full text-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
           <% end %>
         </div>
       <% end %>
