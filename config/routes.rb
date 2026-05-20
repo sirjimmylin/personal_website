@@ -4,15 +4,15 @@ Rails.application.routes.draw do
   get "tags/:tag", to: "posts#index", as: :tag
   get "search", to: "search#index"
   get "links", to: "links#index"
-  resources :posts, only: [:index, :show]
-  resources :projects, only: [:index, :show]
+  resources :posts, only: [ :index, :show ]
+  resources :projects, only: [ :index, :show ]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-  
+
   # --- ADD THIS LINE ---
-  resources :contacts, only: [:create]
+  resources :contacts, only: [ :create ]
   # ---------------------
 
   get "experiences", to: "pages#experiences"
@@ -21,11 +21,11 @@ Rails.application.routes.draw do
   # Admin Namespace
   namespace :admin do
     root "dashboard#index"
-    resources :posts, param: :slug, except: [:show]
-    resources :projects, param: :slug, except: [:show]
-    
+    resources :posts, param: :slug, except: [ :show ]
+    resources :projects, param: :slug, except: [ :show ]
+
     # --- ADD THIS ---
-    resources :contacts, only: [:index, :destroy]
+    resources :contacts, only: [ :index, :destroy ]
   end
 
   # Login Routes

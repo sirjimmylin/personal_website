@@ -1,17 +1,17 @@
 module Admin
   class ProjectsController < AdminController
-    before_action :set_project, only: [:edit, :update, :destroy]
+    before_action :set_project, only: [ :edit, :update, :destroy ]
 
    def index
       @projects = Project.all.order(created_at: :desc)
 
-      if params[:status] == 'published'
+      if params[:status] == "published"
         @projects = @projects.where("published_at <= ?", Time.current)
-      elsif params[:status] == 'draft'
+      elsif params[:status] == "draft"
         @projects = @projects.where("published_at IS NULL OR published_at > ?", Time.current)
       end
     end
-    
+
     def new
       @project = Project.new
     end
@@ -54,7 +54,7 @@ module Admin
  def destroy
     # CHANGE THIS LINE: Use find_by!(slug: params[:slug])
     @project = Project.find_by!(slug: params[:slug])
-    
+
     @project.destroy
     redirect_to admin_projects_path, notice: "Project was successfully deleted."
   end

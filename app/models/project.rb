@@ -2,9 +2,9 @@ require "uri"
 
 class Project < ApplicationRecord
   include PgSearch::Model
-  
+
   # This creates a "global" search scope
-  multisearchable against: [:title, :summary, :body]
+  multisearchable against: [ :title, :summary, :body ]
 
   validate :repo_link_must_be_http_url
   validate :demo_link_must_be_http_url

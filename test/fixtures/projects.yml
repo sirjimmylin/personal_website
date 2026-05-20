@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  slug: MyString
-  summary: MyText
-  body: MyText
+  title: First Project
+  slug: first-project
+  summary: This is the first project.
+  body: Body of the first project.
   published_at: 2026-01-25 15:38:37
-  repo_link: MyString
-  demo_link: MyString
+  repo_link: https://github.com/one
+  demo_link: https://demo.one
 
 two:
-  title: MyString
-  slug: MyString
-  summary: MyText
-  body: MyText
+  title: Second Project
+  slug: second-project
+  summary: This is the second project.
+  body: Body of the second project.
   published_at: 2026-01-25 15:38:37
-  repo_link: MyString
-  demo_link: MyString
+  repo_link: https://github.com/two
+  demo_link: https://demo.two

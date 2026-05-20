@@ -16,13 +16,13 @@ class ProjectsController < ApplicationController
   def show
     # Finds the project by Slug
     @project = Project.find_by!(slug: params[:id])
-    
+
     # SECURITY CHECK:
     # If a user guesses the URL of a draft project, kick them out.
     # (Unless you want them to see a 404, which is also fine)
     unless authenticated? || @project.published?
       redirect_to projects_path, alert: "That project is not live yet."
-      return
+      nil
     end
   end
 end

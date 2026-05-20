@@ -7,7 +7,7 @@ module MarkdownHelper
     # 1. Configure the HTML Renderer
     renderer = Redcarpet::Render::HTML.new(
       filter_html: false,     # <--- CHANGE THIS to false so your <div> tags work!
-      hard_wrap: true, 
+      hard_wrap: true,
       link_attributes: { rel: "nofollow noopener noreferrer", target: "_blank" }
     )
 

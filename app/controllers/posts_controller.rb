@@ -13,11 +13,11 @@ class PostsController < ApplicationController
       @results = PgSearch.multisearch(params[:query])
       @posts = @results.map(&:searchable).select { |r| r.is_a?(Post) }
       @posts = @posts.select(&:published?) unless authenticated?
-      
+
     elsif params[:tag].present?
       # --- NEW: Filter by Tag ---
       @posts = scope.where(tag: params[:tag])
-      
+
     else
       # Only show posts where published_at is in the PAST or PRESENT
       @posts = scope.order(created_at: :desc)
@@ -66,13 +66,13 @@ class PostsController < ApplicationController
 
   private
 
-# Find the post by ID *or* by Title
+  # Find the post by ID *or* by Title
   def set_post
     @post = Post.find_by(slug: params[:id]) || Post.find_by(id: params[:id])
 
     if @post.nil?
       redirect_to posts_path, alert: "Could not find that post."
-      return
+      nil
     end
   end
 
@@ -82,4 +82,4 @@ class PostsController < ApplicationController
 
     redirect_to posts_path, alert: "That post is not live yet."
   end
-  end
+end

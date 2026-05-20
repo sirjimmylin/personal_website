@@ -1,8 +1,8 @@
 class Post < ApplicationRecord
   include PgSearch::Model
-  
+
   # This creates a "global" search scope
-  multisearchable against: [:title, :summary, :body]
+  multisearchable against: [ :title, :summary, :body ]
 
   scope :published, -> { where(published_at: ..Time.current) }
 

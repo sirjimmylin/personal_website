@@ -1,7 +1,7 @@
 module Admin
   class PostsController < AdminController
     # This line says: "Run set_post before edit, update, and destroy"
-    before_action :set_post, only: [:edit, :update, :destroy]
+    before_action :set_post, only: [ :edit, :update, :destroy ]
 
     def index
       # Start with all posts
@@ -13,9 +13,9 @@ module Admin
       end
 
       # Filter by Status (if clicked)
-      if params[:status] == 'published'
+      if params[:status] == "published"
         @posts = @posts.where("published_at <= ?", Time.current)
-      elsif params[:status] == 'draft'
+      elsif params[:status] == "draft"
         @posts = @posts.where("published_at IS NULL OR published_at > ?", Time.current)
       end
     end
@@ -62,7 +62,7 @@ module Admin
     end
   end
 
-    # --- MAKE SURE THIS METHOD EXISTS AND IS ABOVE 'PRIVATE' ---
+  # --- MAKE SURE THIS METHOD EXISTS AND IS ABOVE 'PRIVATE' ---
   def destroy
     @post = Post.find_by!(slug: params[:slug])
     @post.destroy
@@ -75,7 +75,7 @@ module Admin
     def set_post
       # 1. Try to find by Slug first (e.g. "my-math-post")
       @post = Post.find_by(slug: params[:slug])
-      
+
       # 2. If not found, try finding by ID (e.g. "4")
       # (This handles the specific error you are seeing now)
       @post ||= Post.find_by(id: params[:slug])
