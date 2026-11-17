@@ -38,4 +38,7 @@ class Project < ApplicationRecord
   rescue URI::InvalidURIError
     errors.add(attribute, "must be a valid HTTP(S) URL")
   end
+  
+  scope :published, -> { where.not(published_at: nil).where("published_at <= ?", Time.current) }
+  scope :draft, -> { where(published_at: nil) }
 end
