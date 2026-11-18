@@ -35,12 +35,12 @@ builder:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - POSTGRES_PASSWORD
   clear:
     # This must match your Droplet IP so the app can find the DB
     DB_HOST: 104.236.93.159 # <--- REPLACE with your Droplet IP
     POSTGRES_USER: personal_website
     POSTGRES_DB: personal_website_production
-    POSTGRES_PASSWORD: B*LCdz!&8RU&%q # <--- CHANGE THIS to something secure
     SOLID_QUEUE_IN_PUMA: true
     SUBSTACK_FEED_URL: "https://sirjimmylin.substack.com/feed"
 
@@ -49,13 +49,14 @@ env:
 accessories:
   db:
     image: postgres:15
-    host: 104.236.93.159 # <--- REPLACE with your Droplet IP
+    host: 104.236.93.159
     port: 5432
     env:
+      secret:
+        - POSTGRES_PASSWORD
       clear:
         POSTGRES_USER: personal_website
         POSTGRES_DB: personal_website_production
-        POSTGRES_PASSWORD: B*LCdz!&8RU&%q # <--- MUST MATCH the password above
     directories:
       - data:/var/lib/postgresql/data
 
