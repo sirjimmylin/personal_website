@@ -41,6 +41,8 @@ env:
     POSTGRES_USER: personal_website
     POSTGRES_DB: personal_website_production
     POSTGRES_PASSWORD: B*LCdz!&8RU&%q # <--- CHANGE THIS to something secure
+    SOLID_QUEUE_IN_PUMA: true
+    SUBSTACK_FEED_URL: "https://sirjimmylin.substack.com/feed"
 
 # 7. Accessories (The Database)
 # This also sits at the 'root' level

@@ -74,3 +74,5 @@ gem "redcarpet", "~> 3.6"
 gem "rouge", "~> 4.7"
 
 gem "pagy", "~> 43.2"
+
+gem "rss"

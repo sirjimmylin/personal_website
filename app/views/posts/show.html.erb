@@ -11,16 +11,21 @@
         <h4 class="font-bold text-gray-900 mb-4">Table of Contents</h4>
         
         <nav data-toc-target="links" class="space-y-2 text-sm">
-          </nav>
+        </nav>
       </div>
 
-      <div class="text-sm text-gray-500">
+      <div class="text-sm text-gray-500 space-y-2">
         <p>Published: <%= @post.published_at&.strftime("%B %d, %Y") || "Draft" %></p>
-          <% if @post.tag.present? %>
-            <p class="mt-2">
-              Topic: 
-              <%= link_to @post.tag, tag_path(@post.tag), class: "text-blue-600 hover:text-blue-800 hover:underline cursor-pointer" %>
-            </p>
+        <% if @post.tag.present? %>
+          <p>
+            Topic: 
+            <%= link_to @post.tag, tag_path(@post.tag), class: "text-blue-600 hover:text-blue-800 hover:underline cursor-pointer" %>
+          </p>
+        <% end %>
+        <% if @post.external_url.present? %>
+          <p class="pt-2">
+            <%= link_to "Read on Substack ↗", @post.external_url, target: "_blank", rel: "noopener noreferrer", class: "text-indigo-600 hover:text-indigo-800 font-medium" %>
+          </p>
         <% end %>
       </div>
     </div>
@@ -29,7 +34,7 @@
       <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-8"><%= @post.title %></h1>
       
       <div data-toc-target="content">
-        <%= markdown(@post.body) %>
+        <%= render_post_content(@post) %>
       </div>
       
     </article>

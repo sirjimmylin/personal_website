@@ -69,6 +69,13 @@ module Admin
     redirect_to admin_posts_path, notice: "Post was successfully deleted."
   end
     # -----------------------------------------------------------
+  
+  def sync_substack
+    SyncSubstackPostsJob.perform_now
+    redirect_to admin_posts_path, notice: "Substack posts synced successfully."
+  rescue StandardError => e
+    redirect_to admin_posts_path, alert: "Substack sync failed: #{e.message}"
+  end
 
     private  # <--- Everything below this line is hidden
 

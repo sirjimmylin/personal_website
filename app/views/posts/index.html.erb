@@ -28,13 +28,19 @@
       <% @posts.each do |post| %>
         <article class="flex flex-col items-start justify-between p-6 rounded-2xl bg-gray-50 hover:bg-gray-100 transition">
           
-          <div class="flex items-center gap-x-4 text-xs">
+          <div class="flex flex-wrap items-center gap-2 text-xs">
             <time datetime="<%= post.published_at %>" class="text-gray-500">
               <%= post.published_at&.strftime("%b %d, %Y") || "Draft" %>
             </time>
             
             <% if post.try(:tag).present? %>
-              <%= link_to post.tag, tag_path(post.tag), class: "relative z-10 rounded-full bg-indigo-50 px-3 py-1.5 font-medium text-indigo-600 hover:bg-indigo-100 transition cursor-pointer" %>
+              <%= link_to post.tag, tag_path(post.tag), class: "relative z-10 rounded-full bg-indigo-50 px-3 py-1 font-medium text-indigo-600 hover:bg-indigo-100 transition cursor-pointer" %>
+            <% end %>
+
+            <% if post.external_url.present? %>
+              <span class="rounded-full bg-orange-50 px-2.5 py-1 font-medium text-orange-700 ring-1 ring-inset ring-orange-600/20">
+                Substack
+              </span>
             <% end %>
           </div>
 
@@ -45,11 +51,13 @@
                 <%= post.title %>
               </a>
             </h3>
-            <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600"><%= post.summary rescue "" %></p>
+            <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+              <%= post.summary.presence || truncate(strip_tags(post.body.to_s), length: 180) %>
+            </p>
           </div>
 
           <div class="mt-8 flex items-center gap-x-4">
-             <%= link_to "Read Article →", post, class: "text-sm font-semibold text-indigo-600 relative z-10" %>
+            <%= link_to "Read Article →", post, class: "text-sm font-semibold text-indigo-600 relative z-10" %>
           </div>
         </article>
       <% end %>

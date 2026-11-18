@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # --- ADD THIS LINE ---
   resources :contacts, only: [ :create ]
-  # ---------------------
 
   get "experiences", to: "pages#experiences"
   get "about", to: "pages#about"
@@ -21,10 +19,14 @@ Rails.application.routes.draw do
   # Admin Namespace
   namespace :admin do
     root "dashboard#index"
-    resources :posts, param: :slug, except: [ :show ]
-    resources :projects, param: :slug, except: [ :show ]
 
-    # --- ADD THIS ---
+    resources :posts, param: :slug, except: [ :show ] do
+      collection do
+        post :sync_substack
+      end
+    end
+
+    resources :projects, param: :slug, except: [ :show ]
     resources :contacts, only: [ :index, :destroy ]
   end
 
